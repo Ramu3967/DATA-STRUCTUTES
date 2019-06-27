@@ -1,0 +1,132 @@
+//generate tree such that when traversed using only left pointers it shd generate preoder traversal of it.
+//or it can also be asked as follows
+//generate a tree such that level order traversal of it should generate preoder traversal.
+
+import java.util.*;
+class Node{
+	int data;
+	Node left,right;
+	Node(int d)
+	{
+		data=d;
+		left=null;
+		right=null;
+	}
+}
+
+class Problem
+{
+	Node getRMNode(Node n)      //gets right most node
+    {
+        if(n==null || n.right==null)
+            return n;
+        else
+            return getRMNode(n.right);
+    }
+	
+	// Even this algo works. Algo addToRightMostNodeAsLeftChild1 is used with (root.left,toBeAdded)
+	void addToRightMostNodeAsLeftChild(Node root,Node toBeAdded) //this method adds node "toBeAdded" to root's left child's rightmost node as a left child
+    {
+        if(root.left==null)
+        {
+        	root.left=toBeAdded;
+        }
+        else
+        {
+        	Node k=getRMNode(root.left);
+        	if(k.left==null)
+        	{
+        		k.left=toBeAdded;
+        	}
+        	else
+        		addToRightMostNodeAsLeftChild(k, toBeAdded);
+        }
+        root.right=null;
+    }
+
+	
+	void addToRightMostNodeAsLeftChild1(Node root,Node toBeAdded) //this method adds node "toBeAdded" to root's rightmost node as a left child
+    {
+        	Node k=getRMNode(root);
+        	if(k.left==null)
+        	{
+        		k.left=toBeAdded;
+        	}
+        	else
+        		addToRightMostNodeAsLeftChild1(k.left, toBeAdded);
+    }
+	
+	void levelWisePrint(Node root)
+    {
+        System.out.println("-----Printing Level Order LevelWise-----");
+        Queue<Node>q=new LinkedList<Node>();
+        if(root!=null)
+        q.offer(root);
+        int h=0,width=0;
+        while(!q.isEmpty())
+        {
+            int count=q.size();
+            if(count<=0)
+            break;
+            h++;
+            width=Math.max(width,count);
+            while(count!=0)
+            {
+                Node t=q.poll();
+                System.out.print(t.data+" ");
+                if(t!=null)
+                {
+                    if(t.left!=null)
+                    q.offer(t.left);
+                    if(t.right!=null)
+                    q.offer(t.right);
+                }
+                count--;
+            }
+            System.out.println();
+        }
+        System.out.println("height="+h+" width="+width);
+    }
+	void modify(Node root) // converts tree such that traversing it through only left
+	{					   //pointers generates pre-order traversal of the tree
+		if(root==null)
+			return;
+		if(root.left!=null && root.right!=null)
+		{
+			addToRightMostNodeAsLeftChild1(root.left, root.right);
+			root.right=null;
+		}	
+		if(root.right!=null)
+		{
+			root.left=root.right;
+			root.right=null;
+		}
+		modify(root.left);
+		modify(root.right);
+	}
+	void preorder(Node root)
+	{
+		if(root!=null)
+		{
+			System.out.println(root.data);
+			preorder(root.left);
+			preorder(root.right);
+		}
+	}
+	public static void main(String[] args) {
+		Node r=new Node(10);
+		r.left=new Node(8);
+		r.right=new Node(2);
+		r.left.left=new Node(3);
+		r.left.right=new Node(5);
+		r.right.left=new Node(4);
+		r.right.right=new Node(6);
+		r.left.right.left=new Node(7);
+		Problem b=new Problem();
+		b.levelWisePrint(r);
+		System.out.println("\n"+"--preorder traversal--");
+		b.preorder(r);
+		b.modify(r);
+		b.levelWisePrint(r);
+	}
+}
