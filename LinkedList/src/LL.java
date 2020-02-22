@@ -74,7 +74,9 @@ class LL
 				curr=next;
 				c++;
 			}
-			if(prevTail==null)//we've reversed first k numbers,so the kth element(which is pointed by prev at that instance) would be the head of the final list
+			//we've reversed first k numbers,so the kth element(which is pointed by prev at that instance)
+			// would be the head of the final list
+			if(prevTail==null)
 			{
 				n=prev;
 			}
@@ -82,7 +84,8 @@ class LL
 			{
 				prevTail.next=prev;
 			}
-			prevTail=prevCurrent;//after reversing k nodes, previous current would become tail, so prevtail=prevcurrent
+			prevTail=prevCurrent;//after reversing k nodes, previous current would become 
+			//tail, so prevtail=prevcurrent
 			prevCurrent=curr;
 		}
 		return n;
