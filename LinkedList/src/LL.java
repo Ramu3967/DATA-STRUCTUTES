@@ -142,7 +142,7 @@ class LL
 	
 	void addAsHead(Node headOfTheList,Node toBeAdded,Node prev)
 	{
-		if(prev==null)
+		if(prev==null)// if the first element itself is smaller than k, then there'dn't be a prev
 			return;
 		prev.next=toBeAdded.next;
 		toBeAdded.next=headOfTheList;
