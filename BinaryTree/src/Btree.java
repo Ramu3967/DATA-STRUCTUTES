@@ -346,9 +346,11 @@ public class Btree {
 			Node temp=q.poll();
 			if(temp==null)
 			{
-				System.out.println();
 				if(q.peek()!=null)
+				{
 					q.offer(null);
+					System.out.println();
+				}
 			}
 			else
 			{
