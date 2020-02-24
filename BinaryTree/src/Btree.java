@@ -441,6 +441,62 @@ public class Btree {
 	    return height;
 	}
 	
+	int postorderWithSinglePushToStack(Node n) // postorder with prev
+	{
+		int height=0;
+	    Stack<Node>s=new Stack<Node>();
+	    Node p=n,temp=null,prev=null;
+	    while(true)
+	    {
+	        while(p!=null)
+	        {
+	            s.push(p);
+	            p=p.left;
+	        }
+	        if(s.empty())
+	        	break;
+	        //to calculate height via postorder count nodes in stack
+	        height=Math.max(height, s.size());
+	        
+	        temp=s.peek().right;//crucial
+	        if(temp==null) //steps
+	             {
+	                 
+	        	    temp=s.pop();
+	        	  //  System.out.print(temp.data+" ");
+	        	    if(prev!=null)
+		            {
+				        System.out.print(temp.data+"-->"+prev.data+" ");
+				        System.out.println();
+		            }
+			        else
+			        {
+				        System.out.print(temp.data+"-->NULL ");
+				        System.out.println();
+			        }
+			        prev=temp;
+	        	    while(!s.empty() && temp==s.peek().right)
+	        	    {
+    	        		temp=s.pop();
+	        		    if(prev!=null)
+		            {
+				        System.out.print(temp.data+"-->"+prev.data+" ");
+				        System.out.println();
+		            }
+			        else
+			        {
+				        System.out.print(temp.data+"-->NULL ");
+				        System.out.println();
+			        }
+	        		    prev=temp;
+	        	    }
+	            }
+	            else
+    	        	p=temp;
+	            }
+	    return height;
+	}
+	
 	int diameter(Node n) //O(n^2)
 	{
 		if(n==null)
