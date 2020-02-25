@@ -116,7 +116,7 @@ public class Btree {
 		return createBtreeUtil(in,0,in.length-1,pre);
 	}
 	
-	int search(int[]a,int start,int end,int value)//instead use binary search
+	int search(int[]a,int start,int end,int value)
 	{
 		int i=start;
 		for(;i<=end;i++)
