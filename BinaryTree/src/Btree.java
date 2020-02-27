@@ -644,12 +644,11 @@ public class Btree {
 			if(al==null)
 			{
 				al=new ArrayList<>();
-				al.add(temp);
+				
 			}
 			else
-			{
-				al.add(temp);
-			}
+			{ }
+			al.add(temp);
 			m.put(hd, al);
 		}
 		for(Map.Entry<Integer, ArrayList<Node>>k: m.entrySet())
